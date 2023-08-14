@@ -80,10 +80,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="tabMain" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
+          <Component id="tabMain" alignment="0" pref="404" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -384,7 +381,7 @@
                           <Component id="btnSubmitOrder" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnCalculate" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
+                      <EmptySpace pref="48" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

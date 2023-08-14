@@ -1,10 +1,12 @@
 
-import java.io.IOException;
+import java.sql.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.JFrame; 
 import javax.swing.JOptionPane;
 
 /*
@@ -341,7 +343,7 @@ public class LandscapeGUI extends javax.swing.JFrame {
                 .addGroup(pnlInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSubmitOrder)
                     .addComponent(btnCalculate))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         tabMain.addTab("Information", pnlInformation);
@@ -485,9 +487,7 @@ public class LandscapeGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(tabMain)
-                .addContainerGap())
+            .addComponent(tabMain, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
         );
 
         tabMain.getAccessibleContext().setAccessibleName("jPanel1");
@@ -565,6 +565,7 @@ public class LandscapeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoadActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+
         try {
             // get the selected object
             Customer old = lstCustomers.getSelectedValue();
@@ -572,13 +573,13 @@ public class LandscapeGUI extends javax.swing.JFrame {
             // if something is selected, delete it and clear the details textarea
             if (old != null) {
                 DataIO data = new DataIO();
-                data.delete(old.getName());   // get the name only
+                data.delete(old.getCustomerID());   // get the name only
                 txaCustomerInfo.setText("");
                 loadCustomers();
             }
-        } catch (IOException ex) {
+        } catch (SQLException ex) { 
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                    "DataIO Error", JOptionPane.ERROR_MESSAGE);
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -812,7 +813,7 @@ public class LandscapeGUI extends javax.swing.JFrame {
         return cust;
     }
 
-    private void submitOrder() {
+    private void submitOrder()  {
         if (validateInputs() == false) {
             return;    // end the method if validation failed
         }
@@ -832,9 +833,12 @@ public class LandscapeGUI extends javax.swing.JFrame {
             //move to the client orders tab
             tabMain.setSelectedIndex(2);
 
-        } catch (IOException ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
                     "File IO Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Driver Not Found Error: " + ex.getMessage(),
+                    "Database Driver Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -851,11 +855,10 @@ public class LandscapeGUI extends javax.swing.JFrame {
             for (int i = 0; i < customers.size(); i++) {
                 customerList.addElement(customers.get(i));
             }
-        } catch (IOException ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                    "File IO Error", JOptionPane.ERROR_MESSAGE);
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
 }
